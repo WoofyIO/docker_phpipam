@@ -24,7 +24,7 @@ ADD apache.conf /etc/apache2/conf.d/
 ADD start.sh /
 
 RUN chmod +x /start.sh
-
+RUN sed -i 's/\r//' /start.sh
 EXPOSE 80
 
-CMD /start.sh
+CMD ["/start.sh"]
