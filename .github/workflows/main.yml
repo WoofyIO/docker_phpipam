@@ -1,0 +1,60 @@
+name: Build Docker Image and Deploy
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Run on cron
+  schedule:
+    - cron: "35 22 * * *"
+
+jobs:
+  Build_Publish_and_Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+          name: Checkout Code
+          uses: actions/checkout@v2
+      -
+          name: Prepare
+          id: prep
+          run: |
+            if [[ $GITHUB_REF == refs/tags/* ]]; then
+              VERSION=${GITHUB_REF#refs/tags/}
+            elif [[ $GITHUB_REF == refs/heads/* ]]; then
+              VERSION=$(echo ${GITHUB_REF#refs/heads/} | sed -r 's#/+#-#g')
+            elif [[ $GITHUB_REF == refs/pull/* ]]; then
+              VERSION=pr-${{ github.event.number }}
+            fi
+            echo ::set-output name=version::${VERSION}
+            echo ::set-output name=commit::sha-${GITHUB_SHA::8}
+            echo ::set-output name=created::$(date -u +'%Y%m%d')
+      -  
+          name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+      -
+          name: Login to Registry
+          uses: docker/login-action@v1 
+          with:
+            registry: ${{ secrets.DOCKER_REG_URL }}
+            username: ${{ secrets.DOCKER_REG_USER }}
+            password: ${{ secrets.DOCKER_REG_PASS }}
+      -
+          name: Build and push
+          id: docker_build
+          uses: docker/build-push-action@v2
+          with:
+            push: true
+            tags: ${{ secrets.DOCKER_REG_URL }}/phpipam:latest,${{ secrets.DOCKER_REG_URL }}/phpipam:${{ steps.prep.outputs.version }},${{ secrets.DOCKER_REG_URL }}/phpipam:${{ steps.prep.outputs.commit }},${{ secrets.DOCKER_REG_URL }}/phpipam:${{ steps.prep.outputs.created }}
+      - 
+          name: Deploy Image
+          uses: fjogeleit/http-request-action@master
+          with:
+              url: ${{ secrets.DOCKER_DEP_URL }}
+              method: 'POST'
