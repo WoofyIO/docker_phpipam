@@ -51,7 +51,7 @@ jobs:
           uses: docker/build-push-action@v2
           with:
             push: true
-            platforms: linux/arm64, linux/amd64, linux/arm/8
+            platforms: linux/arm64, linux/amd64
             tags: ${{ secrets.DOCKER_REG_URL }}/phpipam:latest,${{ secrets.DOCKER_REG_URL }}/phpipam:${{ steps.prep.outputs.version }},${{ secrets.DOCKER_REG_URL }}/phpipam:${{ steps.prep.outputs.commit }},${{ secrets.DOCKER_REG_URL }}/phpipam:${{ steps.prep.outputs.created }}
       - 
           name: Deploy Image
