@@ -56,9 +56,9 @@ jobs:
             push: true
             platforms: linux/arm64, linux/amd64, linux/arm/7
             tags: ${{ secrets.DOCKER_REG_URL }}/phpipam:latest,${{ secrets.DOCKER_REG_URL }}/phpipam:${{ steps.prep.outputs.version }},${{ secrets.DOCKER_REG_URL }}/phpipam:${{ steps.prep.outputs.commit }},${{ secrets.DOCKER_REG_URL }}/phpipam:${{ steps.prep.outputs.created }}
-      - 
-          name: Deploy Image
-          uses: fjogeleit/http-request-action@master
-          with:
-              url: ${{ secrets.DOCKER_DEP_URL }}
-              method: 'POST'
+#       - 
+#           name: Deploy Image
+#           uses: fjogeleit/http-request-action@master
+#           with:
+#               url: ${{ secrets.DOCKER_DEP_URL }}
+#               method: 'POST'
