@@ -17,7 +17,7 @@ RUN apk upgrade --no-cache \
     && find -type f              -exec chmod u=rw,go=r {} \; \
     && find -type d              -exec chmod u=rwx,go=rx {} \; \
     && find -type d -name upload -exec chmod a=rwx {} \; \
-    && ln -s config.docker.php config.php 
+    && ln -s config.docker.php config.php \
     && echo "$allow_untested_php_versions=true;" >> config.php
 
 ADD crontab /etc/crontabs/apache
