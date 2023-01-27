@@ -21,7 +21,7 @@ RUN apk upgrade --no-cache \
 ADD crontab /etc/crontabs/apache
 ADD apache.conf /etc/apache2/conf.d/
 ADD start.sh /
-ADD config.php /phpipam/
+ADD config.php /phpipam
 
 RUN chmod +x /start.sh
 RUN sed -i 's/\r//' /start.sh
