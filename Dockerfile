@@ -19,7 +19,7 @@ RUN apk upgrade --no-cache \
     && find -type d -name upload -exec chmod a=rwx {} \; \
     && ln -s config.docker.php config.php \
     && echo '$allow_untested_php_versions=true;' >> config.php \
-    && echo "$db['ssl']=true;" >> config.php    
+    && echo '$db[\'ssl\']=true;' >> config.php    
 
 ADD crontab /etc/crontabs/apache
 ADD apache.conf /etc/apache2/conf.d/
