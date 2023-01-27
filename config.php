@@ -58,6 +58,6 @@ $cookie_samesite = file_env('COOKIE_SAMESITE', $cookie_samesite);
  *
  * @var string
  */
-$session_storage = "database";
-$allow_untested_php_versions=true;
-$db['ssl']=true;
+$session_storage                =   "database";
+$allow_untested_php_versions    =   true;
+$db['ssl']                      =   true;
