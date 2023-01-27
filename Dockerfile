@@ -16,14 +16,12 @@ RUN apk upgrade --no-cache \
     && find -name ".git*"        -exec rmdir --ignore-fail-on-non-empty {} \; \
     && find -type f              -exec chmod u=rw,go=r {} \; \
     && find -type d              -exec chmod u=rwx,go=rx {} \; \
-    && find -type d -name upload -exec chmod a=rwx {} \; \
-    && ln -s config.docker.php config.php \
-    && echo '$allow_untested_php_versions=true;' >> config.php \
-    && echo '$db['ssl']=true;' >> config.php    
+    && find -type d -name upload -exec chmod a=rwx {} \; \  
 
 ADD crontab /etc/crontabs/apache
 ADD apache.conf /etc/apache2/conf.d/
 ADD start.sh /
+ADD config.php /phpipam/
 
 RUN chmod +x /start.sh
 RUN sed -i 's/\r//' /start.sh
