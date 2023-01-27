@@ -16,7 +16,7 @@ RUN apk upgrade --no-cache \
     && find -name ".git*"        -exec rmdir --ignore-fail-on-non-empty {} \; \
     && find -type f              -exec chmod u=rw,go=r {} \; \
     && find -type d              -exec chmod u=rwx,go=rx {} \; \
-    && find -type d -name upload -exec chmod a=rwx {} \; \  
+    && find -type d -name upload -exec chmod a=rwx {} \;
 
 ADD crontab /etc/crontabs/apache
 ADD apache.conf /etc/apache2/conf.d/
