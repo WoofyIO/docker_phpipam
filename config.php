@@ -61,3 +61,5 @@ $cookie_samesite = file_env('COOKIE_SAMESITE', $cookie_samesite);
 $session_storage                =   "database";
 $allow_untested_php_versions    =   true;
 $db['ssl']                      =   true;
+$db['ssl_ca'] = '/phpipam/BaltimoreCyberTrustRoot.crt.pem';
+$db['ssl_verify'] = 'false';
