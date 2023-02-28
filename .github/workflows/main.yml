@@ -12,7 +12,7 @@ on:
 
   # Run on cron
   schedule:
-    - cron: "35 22 * * *"
+    - cron: "35 22 */7 * *"
 
 jobs:
   Build_Publish_and_Deploy:
