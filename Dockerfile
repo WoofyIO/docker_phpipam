@@ -22,7 +22,7 @@ ADD crontab /etc/crontabs/apache
 ADD apache.conf /etc/apache2/conf.d/
 ADD start.sh /
 ADD config.php /phpipam
-ADD BaltimoreCyberTrustRoot.crt.pem /phpipam
+ADD TrustRoot.crt.pem /phpipam
 
 RUN chmod +x /start.sh
 RUN sed -i 's/\r//' /start.sh
